@@ -1,12 +1,10 @@
-# Implementing Algorithms Based On CLRS in JavaScript
+# Implementing Algorithms Based On "CLRS" in JavaScript
 
-## comparison-based Sorts
+## Comparison-based Sorts
 
 ### Bubble Sort
 
 #### 📌 Overview
-
-**Bubble Sort** is a simple comparison-based sorting algorithm. It repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. This process is repeated until the list is sorted.
 
 **Bubble Sort** is a simple comparison-based sorting algorithm. It repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. This process is repeated until the list is sorted.
 
@@ -304,10 +302,10 @@ const countingSort = (array) => {
 
 ## ✅ Covered
 
-- [x] Bubble Sort – Overview, Time Complexity, Example
-- [x] Insertion Sort – Overview, Time Complexity, Example
-- [x] Merge Sort – Overview, Time Complexity, Example
-- [x] Quick Sort – Overview, Time Complexity, Example
+- [x] Bubble Sort
+- [x] Insertion Sort
+- [x] Merge Sort
+- [x] Quick Sort
 
 ---
 
