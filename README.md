@@ -17,7 +17,7 @@ const bubbleSort = (array) => {
     for (let j = 0; j < length - i - 1; j++) {
       if (array[j] > array[j + 1]) {
         //swapping two number
-        ;[array[j], array[j + 1]] = [array[j + 1], array[j]]
+        [array[j], array[j + 1]] = [array[j + 1], array[j]]
       }
     }
   }
@@ -113,7 +113,7 @@ const selectionSort = (array) => {
     }
 
     if (minIndex !== i) {
-      ;[array[i], array[minIndex]] = [array[minIndex], array[i]]
+      [array[i], array[minIndex]] = [array[minIndex], array[i]]
     }
   }
 
@@ -208,11 +208,11 @@ const partition = (arr, low, high) => {
   for (let j = low; j <= high - 1; j++) {
     if (arr[j] < pivot) {
       i++
-      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      [arr[i], arr[j]] = [arr[j], arr[i]]
     }
   }
 
-  ;[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
+  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
   return i + 1
 }
 
@@ -351,7 +351,7 @@ const heapSort = (array) => {
   }
 
   for (let i = n - 1; i > 0; i--) {
-    ;[array[0], array[i]] = [array[i], array[0]]
+    [array[0], array[i]] = [array[i], array[0]]
     heapify(array, i, 0)
   }
   return array
