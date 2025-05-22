@@ -17,7 +17,7 @@ const bubbleSort = (array) => {
     for (let j = 0; j < length - i - 1; j++) {
       if (array[j] > array[j + 1]) {
         //swapping two number
-        [array[j], array[j + 1]] = [array[j + 1], array[j]]
+        ;[array[j], array[j + 1]] = [array[j + 1], array[j]]
       }
     }
   }
@@ -92,6 +92,56 @@ const insertionSort = (array) => {
 
 ---
 
+### Selection Sort
+
+#### 📌 Overview
+
+**Selection Sort** is a simple comparison-based sorting algorithm. It divides the array into a sorted and unsorted region and repeatedly selects the smallest (or largest) element from the unsorted region, placing it at the end of the sorted region.
+
+#### 💡 Implementation
+
+```js
+const selectionSort = (array) => {
+  const n = array.length
+
+  for (let i = 0; i < n - 1; i++) {
+    let minIndex = i
+    for (let j = i + 1; j < n; j++) {
+      if (array[j] < array[minIndex]) {
+        minIndex = j
+      }
+    }
+
+    if (minIndex !== i) {
+      ;[array[i], array[minIndex]] = [array[minIndex], array[i]]
+    }
+  }
+
+  return array
+}
+```
+
+#### ⚙️ How It Works
+
+1. Start from the first element.
+2. Find the minimum element in the unsorted part of the array.
+3. Swap it with the first unsorted element.
+4. Repeat for the remaining elements.
+
+#### ⏱️ Time and Space Complexities
+
+| Case         | Time Complexity | Description                                                            |
+| ------------ | --------------- | ---------------------------------------------------------------------- |
+| Best Case    | O(n²)           | Even if the array is sorted, it still does n² comparisons.             |
+| Average Case | O(n²)           | Always performs the same number of comparisons regardless of order.    |
+| Worst Case   | O(n²)           | Occurs when the array is sorted in reverse; still does n² comparisons. |
+
+- **Space Complexity**: O(1) – In-place sorting.
+- **Stable**: ❌ No – Swapping can change the relative order of equal elements.
+- **In-place**: ✅ Yes – Requires constant extra memory.
+
+---
+
 ### Merge Sort
 
 #### 📌 Overview
@@ -158,11 +208,11 @@ const partition = (arr, low, high) => {
   for (let j = low; j <= high - 1; j++) {
     if (arr[j] < pivot) {
       i++
-      [arr[i], arr[j]] = [arr[j], arr[i]]
+      ;[arr[i], arr[j]] = [arr[j], arr[i]]
     }
   }
 
-  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
+  ;[arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]
   return i + 1
 }
 
@@ -199,15 +249,13 @@ quickSort(arr, 0, arr.length - 1)
 
 ---
 
-<!-- ## Heap Sort
+### Tree Sort
 
-```js
+#### 📌 Overview
 
- const heapSort = (array) => { const heapify = (arr, n, i) => { let largest = i; let l = 2 _ i + 1; let r = 2 _ i + 2; if (l < n && arr[l] > arr[largest]) largest = l; if (r < n && arr[r] > arr[largest]) largest = r; if (largest !== i) { [arr[i], arr[largest]] = [arr[largest], arr[i]]; heapify(arr, n, largest); } }; let n = array.length; for (let i = Math.floor(n / 2) - 1; i >= 0; i--) heapify(array, n, i); for (let i = n - 1; i > 0; i--) { [array[0], array[i]] = [array[i], array[0]]; heapify(array, i, 0); } return array; };
+**Tree Sort** is a sorting algorithm that builds a **Binary Search Tree (BST)** from the elements of the input list, then performs an **in-order traversal** of the BST to retrieve elements in sorted order.
 
-```
-
-## Tree Sort
+#### 💡 Implementation
 
 ```js
 class TreeNode {
@@ -217,88 +265,121 @@ class TreeNode {
     this.right = null
   }
 }
+
 const insertNode = (root, value) => {
   if (!root) return new TreeNode(value)
-  if (value < root.value) root.left = insertNode(root.left, value)
-  else root.right = insertNode(root.right, value)
+
+  if (value < root.value) {
+    root.left = insertNode(root.left, value)
+  } else {
+    root.right = insertNode(root.right, value)
+  }
   return root
 }
-const inOrderTraversal = (root, result) => {
-  if (root) {
-    inOrderTraversal(root.left, result)
-    result.push(root.value)
-    inOrderTraversal(root.right, result)
+const inOrderTraversal = (node, result) => {
+  if (node) {
+    inOrderTraversal(node.left, result)
+    result.push(node.value)
+    inOrderTraversal(node.right, result)
   }
 }
+
 const treeSort = (array) => {
   let root = null
-  for (let val of array) root = insertNode(root, val)
-  let result = []
-  inOrderTraversal(root, result)
-  return result
+  for (const num of array) {
+    root = insertNode(root, num)
+  }
+
+  const sorted = []
+  inOrderTraversal(root, sorted)
+  return sorted
 }
-``` -->
+```
 
-<!-- ## Non-Comparison-based Sorts -->
+#### ⚙️ How It Works
 
-<!-- ## Bucket Sort
+1. Insert each element into a Binary Search Tree (BST).
+2. Perform in-order traversal of the BST.
+3. Collect the elements during traversal to get the sorted array.
+
+#### ⏱️ Time and Space Complexities
+
+| Case         | Time Complexity | Description                                               |
+| ------------ | --------------- | --------------------------------------------------------- |
+| Best Case    | O(n log n)      | Balanced BST; each insert and traversal is log(n).        |
+| Average Case | O(n log n)      | On average, trees are reasonably balanced.                |
+| Worst Case   | O(n²)           | Unbalanced BST (e.g., sorted input leads to skewed tree). |
+
+- **Space Complexity**: O(n) – Extra space for the tree.
+- **Stable**: ❌ No – Relative order of equal elements may change.
+- **In-place**: ❌ No – Requires additional memory for the tree structure.
+
+---
+
+### Heap Sort
+
+#### 📌 Overview
+
+**Heap Sort** is a comparison-based sorting algorithm that uses a **Binary Heap** (usually a Max-Heap). It repeatedly extracts the maximum element from the heap and rebuilds the heap until the array is sorted.
+
+#### 💡 Implementation
 
 ```js
-const bucketSort = (array, bucketSize = 5) => {
-  if (array.length === 0) return array
-  let min = Math.min(...array)
-  let max = Math.max(...array)
-  let bucketCount = Math.floor((max - min) / bucketSize) + 1
-  let buckets = Array.from({ length: bucketCount }, () => [])
-  for (let i = 0; i < array.length; i++) {
-    let index = Math.floor((array[i] - min) / bucketSize)
-    buckets[index].push(array[i])
+const heapify = (array, n, i) => {
+  let largest = i
+  let left = 2 * i + 1
+  let right = 2 * i + 2
+
+  if (left < n && array[left] > array[largest]) {
+    largest = left
   }
-  array.length = 0
-  for (let bucket of buckets) {
-    insertionSort(bucket)
-    array.push(...bucket)
+  if (right < n && array[right] > array[largest]) {
+    largest = right
+  }
+
+  if (largest !== i) {
+    ;[array[i], array[largest]] = [array[largest], array[i]]
+    heapify(array, n, largest)
+  }
+}
+
+const heapSort = (array) => {
+  let n = array.length
+
+  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+    heapify(array, n, i)
+  }
+
+  for (let i = n - 1; i > 0; i--) {
+    ;[array[0], array[i]] = [array[i], array[0]]
+    heapify(array, i, 0)
   }
   return array
 }
 ```
 
-## Radix Sort
+#### ⚙️ How It Works
 
-```js
-const radixSort = (array) => {
-  const getMax = (arr) => Math.max(...arr)
-  const getDigit = (num, place) => Math.floor(Math.abs(num) / Math.pow(10, place)) % 10
-  const digitCount = (num) => (num === 0 ? 1 : Math.floor(Math.log10(Math.abs(num))) + 1)
-  const maxDigits = digitCount(getMax(array))
-  for (let k = 0; k < maxDigits; k++) {
-    let buckets = Array.from({ length: 10 }, () => [])
-    for (let num of array) {
-      buckets[getDigit(num, k)].push(num)
-    }
-    array = [].concat(...buckets)
-  }
-  return array
-}
-```
+1. Build a **Max Heap** from the input array.
+2. Swap the root (largest element) with the last item.
+3. Reduce heap size and heapify the root.
+4. Repeat until heap size is 1.
 
-## Counting Sort
+#### ⏱️ Time and Space Complexities
 
-```js
-const countingSort = (array) => {
-  let max = Math.max(...array)
-  let min = Math.min(...array)
-  let count = Array(max - min + 1).fill(0)
-  for (let num of array) count[num - min]++
-  let index = 0
-  for (let i = 0; i < count.length; i++) {
-    while (count[i]-- > 0) {
-      array[index++] = i + min
-    }
-  }
-  return array
-}
-``` -->
+| Case         | Time Complexity | Description                                                |
+| ------------ | --------------- | ---------------------------------------------------------- |
+| Best Case    | O(n log n)      | Heapify is always log(n), even if input is already sorted. |
+| Average Case | O(n log n)      | Consistently log(n) for each of n elements.                |
+| Worst Case   | O(n log n)      | Performs the same regardless of input distribution.        |
+
+- **Space Complexity**: O(1) – Sorting is done in-place.
+- **Stable**: ❌ No – Order of equal elements may not be preserved.
+- **In-place**: ✅ Yes – No additional memory needed.
+
+---
+
+## Non-Comparison-based Sorts
 
 ## ✅ Covered
 
@@ -306,13 +387,14 @@ const countingSort = (array) => {
 - [x] Insertion Sort
 - [x] Merge Sort
 - [x] Quick Sort
+- [x] Selection Sort
+- [x] Tree Sort
+- [x] Heap Sort
 
 ---
 
 ## 📌 To-Do Next
 
-- [ ] Selection Sort – Overview & Implementation
-- [ ] Heap Sort – Learn logic and time complexity
-- [ ] Radix Sort – Non-comparison based sorting
-- [ ] Counting Sort – Ideal for small integer ranges
-- [ ] Visual comparison of sorting algorithms
+- [ ] Radix Sort
+- [ ] Counting Sort
+- [ ] Bucket Sort
